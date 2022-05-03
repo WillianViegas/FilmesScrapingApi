@@ -1,3 +1,6 @@
+using FilmesScrappingApi.Data;
+using FilmesScrappingApi.Data.Repository;
+using FilmesScrappingApi.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -26,6 +30,11 @@ namespace FilmesScrappingApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DatabaseConfig>(Configuration.GetSection(nameof(DatabaseConfig)));
+            services.AddSingleton<IDatabaseConfig>(sp => sp.GetRequiredService<IOptions<DatabaseConfig>>().Value);
+
+            services.AddSingleton<IFilmesRepository, FilmesRepository>();
+            services.AddSingleton<IFilmesService, FilmesService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
