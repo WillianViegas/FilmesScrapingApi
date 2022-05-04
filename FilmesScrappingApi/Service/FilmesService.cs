@@ -1,4 +1,5 @@
-﻿using FilmesScrappingApi.Model;
+﻿using FilmesScrappingApi.Data.Repository;
+using FilmesScrappingApi.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,24 +9,41 @@ namespace FilmesScrappingApi.Service
 {
     public class FilmesService : IFilmesService
     {
-        public string GetCapaFilme()
+
+        private IFilmesRepository _filmesRepository;
+
+        public FilmesService(IFilmesRepository filmesRepository)
         {
-            throw new NotImplementedException();
+            _filmesRepository = filmesRepository;
+        }
+
+        public string GetCapaFilme(string id)
+        {
+            var filme = GetFilmeById(id);
+
+            if (filme == null)
+                return null;
+
+            return filme.Capa;
         }
 
         public Filmes GetFilmeById(string id)
         {
-            throw new NotImplementedException();
+            return _filmesRepository.GetFilmeById(id);
         }
 
         public IList<Filmes> GetFilmes()
         {
-            throw new NotImplementedException();
+            return _filmesRepository.GetFilmes();
         }
 
         public Filmes GetMelhorNota()
         {
-            throw new NotImplementedException();
+            var listaFilmes = GetFilmes();
+            var maiorNota = listaFilmes.Max(x => x.Nota);
+            var filmeComMaiorNota = listaFilmes.Where(x => x.Nota == maiorNota).FirstOrDefault();
+
+            return filmeComMaiorNota;
         }
     }
 }

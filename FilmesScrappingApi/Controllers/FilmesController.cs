@@ -16,13 +16,11 @@ namespace FilmesScrappingApi.Controllers
     {
         private ILogger<Filmes> _log;
         private IFilmesService _filmesService;
-        private IFilmesRepository _filmesRepository;
 
-        public FilmesController(ILogger<Filmes> log, IFilmesService filmesService, IFilmesRepository filmesRepository)
+        public FilmesController(ILogger<Filmes> log, IFilmesService filmesService)
         {
             _log = log;
             _filmesService = filmesService;
-            _filmesRepository = filmesRepository;
         }
 
         [HttpGet]
@@ -30,5 +28,43 @@ namespace FilmesScrappingApi.Controllers
         {
             return Ok("Teste");
         }
+
+
+        [HttpGet("{id}")]
+        public IActionResult GetCapaFilme(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return BadRequest("Id inválido");
+
+            var urlCapaFilme = _filmesService.GetCapaFilme(id);
+
+
+            return Ok(urlCapaFilme);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetFilmeById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return BadRequest("Id inválido");
+
+            var filme = _filmesService.GetFilmeById(id);
+
+            return Ok(filme);
+        }
+
+        [HttpGet]
+        public IActionResult GetFilmes()
+        {
+            var listFilmes = _filmesService.GetFilmes();
+            return Ok(listFilmes);
+        }
+        [HttpGet]
+        public IActionResult GetMelhorNota()
+        {
+            var filmeMelhorNota = _filmesService.GetMelhorNota();
+            return Ok(filmeMelhorNota);
+        }
+
     }
 }

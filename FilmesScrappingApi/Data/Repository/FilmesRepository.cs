@@ -1,4 +1,5 @@
 ﻿using FilmesScrappingApi.Model;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,24 +9,23 @@ namespace FilmesScrappingApi.Data.Repository
 {
     public class FilmesRepository : IFilmesRepository
     {
-        public string GetCapaFilme()
+        private readonly IMongoCollection<Filmes> _filmes;
+
+        public FilmesRepository(IDatabaseConfig databaseConfig)
         {
-            throw new NotImplementedException();
+            var client = new MongoClient(databaseConfig.ConnectionString);
+            var database = client.GetDatabase(databaseConfig.DatabaseName);
+            _filmes = database.GetCollection<Filmes>("Dados");
         }
 
         public Filmes GetFilmeById(string id)
         {
-            throw new NotImplementedException();
+            return _filmes.Find(filme => filme.Id == id).FirstOrDefault();
         }
 
         public IList<Filmes> GetFilmes()
         {
-            throw new NotImplementedException();
-        }
-
-        public Filmes GetMelhorNota()
-        {
-            throw new NotImplementedException();
+            return _filmes.Find(filmes => true).ToList();
         }
     }
 }

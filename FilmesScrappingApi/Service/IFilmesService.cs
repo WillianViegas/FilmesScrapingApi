@@ -11,6 +11,6 @@ namespace FilmesScrappingApi.Service
         public IList<Filmes> GetFilmes();
         public Filmes GetFilmeById(string id);
         public Filmes GetMelhorNota();
-        public string GetCapaFilme();
+        public string GetCapaFilme(string id);
     }
 }
