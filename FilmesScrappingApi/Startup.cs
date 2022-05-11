@@ -40,6 +40,7 @@ namespace FilmesScrappingApi
 
             services.AddSingleton<IFilmesRepository, FilmesRepository>();
             services.AddSingleton<IFilmesService, FilmesService>();
+            services.AddHealthChecks();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -63,6 +64,8 @@ namespace FilmesScrappingApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseHealthChecks("/health");
 
             app.UseEndpoints(endpoints =>
             {

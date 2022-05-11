@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  filmesscrappingapi:
+    image: ${DOCKER_REGISTRY-}filmesscrappingapi
+    build:
+      context: .
+      dockerfile: FilmesScrappingApi/Dockerfile
