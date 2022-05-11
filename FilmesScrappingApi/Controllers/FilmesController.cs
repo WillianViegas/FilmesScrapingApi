@@ -33,37 +33,69 @@ namespace FilmesScrappingApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetCapaFilme(string id)
         {
-            if (string.IsNullOrEmpty(id))
-                return BadRequest("Id inválido");
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                    return BadRequest("Id inválido");
 
-            var urlCapaFilme = _filmesService.GetCapaFilme(id);
+                var urlCapaFilme = _filmesService.GetCapaFilme(id);
 
 
-            return Ok(urlCapaFilme);
+                return Ok(urlCapaFilme);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Erro ao buscar filme!");
+            }
+       
         }
 
         [HttpGet("{id}")]
         public IActionResult GetFilmeById(string id)
         {
-            if (string.IsNullOrEmpty(id))
-                return BadRequest("Id inválido");
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                    return BadRequest("Id inválido");
 
-            var filme = _filmesService.GetFilmeById(id);
+                var filme = _filmesService.GetFilmeById(id);
 
-            return Ok(filme);
+                return Ok(filme);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Erro ao buscar filme!");
+            }
         }
 
         [HttpGet]
         public IActionResult GetFilmes()
         {
-            var listFilmes = _filmesService.GetFilmes();
-            return Ok(listFilmes);
+            try
+            {
+                var listFilmes = _filmesService.GetFilmes();
+                return Ok(listFilmes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Erro ao buscar a lista de filmes!");
+            }
         }
+
         [HttpGet]
         public IActionResult GetMelhorNota()
         {
-            var filmeMelhorNota = _filmesService.GetMelhorNota();
-            return Ok(filmeMelhorNota);
+
+            try
+            {
+                var filmeMelhorNota = _filmesService.GetMelhorNota();
+                return Ok(filmeMelhorNota);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Erro ao buscar o filme com a melhor nota!");
+            }
+            
         }
 
     }
