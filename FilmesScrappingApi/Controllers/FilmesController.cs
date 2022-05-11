@@ -45,9 +45,10 @@ namespace FilmesScrappingApi.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(500, "Erro ao buscar filme!");
+                _log.LogInformation("Erro ao buscar capa do filme!");
+                _log.LogError(ex, "Erro GetCapaFilme: ");
+                return StatusCode(500, "Erro ao buscar capa do  filme!");
             }
-       
         }
 
         [HttpGet("{id}")]
@@ -64,6 +65,8 @@ namespace FilmesScrappingApi.Controllers
             }
             catch (Exception ex)
             {
+                _log.LogInformation("Erro ao buscar filme id {id}!", id);
+                _log.LogError(ex, "Erro GetFilmeById");
                 return StatusCode(500, "Erro ao buscar filme!");
             }
         }
@@ -78,6 +81,8 @@ namespace FilmesScrappingApi.Controllers
             }
             catch (Exception ex)
             {
+                _log.LogInformation("Erro ao buscar a lista de filmes!");
+                _log.LogError(ex, "Erro GetFilmes");
                 return StatusCode(500, "Erro ao buscar a lista de filmes!");
             }
         }
@@ -85,7 +90,6 @@ namespace FilmesScrappingApi.Controllers
         [HttpGet]
         public IActionResult GetMelhorNota()
         {
-
             try
             {
                 var filmeMelhorNota = _filmesService.GetMelhorNota();
@@ -93,9 +97,10 @@ namespace FilmesScrappingApi.Controllers
             }
             catch (Exception ex)
             {
+                _log.LogInformation("Erro ao buscar o filme com a melhor nota!");
+                _log.LogError(ex, "Erro GetMelhorNota");
                 return StatusCode(500, "Erro ao buscar o filme com a melhor nota!");
             }
-            
         }
 
     }
