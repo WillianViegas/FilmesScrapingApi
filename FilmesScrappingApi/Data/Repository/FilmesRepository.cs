@@ -15,7 +15,7 @@ namespace FilmesScrappingApi.Data.Repository
         {
             var client = new MongoClient(databaseConfig.ConnectionString);
             var database = client.GetDatabase(databaseConfig.DatabaseName);
-            _filmes = database.GetCollection<Filmes>("Dados");
+            _filmes = database.GetCollection<Filmes>(databaseConfig.CollectionName);
         }
 
         public Filmes GetFilmeById(string id)
