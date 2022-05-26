@@ -13,7 +13,8 @@ namespace FilmesScrappingApi.Data.Repository
 
         public FilmesRepository(IDatabaseConfig databaseConfig)
         {
-            var client = new MongoClient(databaseConfig.ConnectionString);
+            var connectionString = databaseConfig.ConnectionString.Replace("user", databaseConfig.User).Replace("password", databaseConfig.Password);
+            var client = new MongoClient(connectionString);
             var database = client.GetDatabase(databaseConfig.DatabaseName);
             _filmes = database.GetCollection<Filmes>(databaseConfig.CollectionName);
         }

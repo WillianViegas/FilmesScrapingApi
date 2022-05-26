@@ -31,7 +31,8 @@ namespace FilmesScrappingApi
 
 
             //Seed filme
-            var client = new MongoClient(dataBaseConfig.ConnectionString);
+            var connectionString = dataBaseConfig.ConnectionString.Replace("user", dataBaseConfig.User).Replace("password", dataBaseConfig.Password);
+            var client = new MongoClient(connectionString);
             var database = client.GetDatabase(dataBaseConfig.DatabaseName);
             var seed = database.GetCollection<Filmes>(dataBaseConfig.CollectionName);
 
